@@ -3,11 +3,16 @@
 //
 
 #include "mp3_encoder.h"
+#include "com_player_xingfeng_multimedia_Mp3Encoder.h"
+
 int Mp3Encoder::Init(const char * pcmFilePath, const char * mp3FilePath, int sampleRate, int channels,
                      int bitRate) {
     int ret = -1;
+    LOGI("Mp3Encoder service init!!");
     pcmFile = fopen(pcmFilePath, "rb");
+
     if (pcmFile) {
+        LOGI("Mp3Encoder service open pcm file success!!");
         mp3File = fopen(mp3FilePath, "wb");
         if (mp3File) {
             lameClient = lame_init();
@@ -18,6 +23,8 @@ int Mp3Encoder::Init(const char * pcmFilePath, const char * mp3FilePath, int sam
             lame_init_params(lameClient);
             ret = 0;
         }
+    } else {
+        LOGI("Mp3Encoder service open pcm file failed!!");
     }
 
     return ret;
@@ -30,6 +37,13 @@ void Mp3Encoder::Encode() {
     short* rightBuffer = new short[bufferSize /4];
     unsigned char* mp3_buffer = new unsigned char[bufferSize];
     size_t  readBufferSize = 0;
+
+    if (!pcmFile) {
+        LOGI("Mp3Encoder service Encode pcmFile not exit");
+    } else {
+        LOGI("Mp3Encoder service Encode pcmFile exit!!!");
+    }
+
     while ((readBufferSize = fread(buffer, 2, bufferSize / 2, pcmFile)) > 0) {
         for (int i = 0; i < readBufferSize; i++) {
             if (i % 2 == 0) {

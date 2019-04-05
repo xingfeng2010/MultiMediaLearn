@@ -1,5 +1,9 @@
-/Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/obj/local/armeabi/objs/audioencoder/./Mp3Encoder.o: \
-  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/./Mp3Encoder.cpp \
-  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/com_player_xingfeng_multimedia_Mp3Encoder.h
+./obj/local/armeabi/objs/audioencoder/./Mp3Encoder.o: \
+  jni/./Mp3Encoder.cpp jni/com_player_xingfeng_multimedia_Mp3Encoder.h \
+  jni/mp3_encoder.h jni/libmp3lame/lame.h
 
-/Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/com_player_xingfeng_multimedia_Mp3Encoder.h:
+jni/com_player_xingfeng_multimedia_Mp3Encoder.h:
+
+jni/mp3_encoder.h:
+
+jni/libmp3lame/lame.h:
