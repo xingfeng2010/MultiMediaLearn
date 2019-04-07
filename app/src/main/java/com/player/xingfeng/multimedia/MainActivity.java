@@ -6,7 +6,9 @@ import android.content.res.AssetManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +17,22 @@ public class MainActivity extends AppCompatActivity {
     public String LOG_TAG = "System.out";
 
     Mp3Encoder encoder;
+    FFmpegNative fFmpegNative;
+
+    private TextView mmText;
 
     // Used to load the 'native-lib' library on application startup.
     static {
+        System.loadLibrary("avutil-55");
+        System.loadLibrary("avcodec-57");
+        System.loadLibrary("avformat-57");
+        System.loadLibrary("avdevice-57");
+        System.loadLibrary("swresample-2");
+        System.loadLibrary("swscale-4");
+        System.loadLibrary("postproc-54");
+        System.loadLibrary("avfilter-6");
         System.loadLibrary("native-lib");
+        System.loadLibrary("audioencoder");
     }
 
     @Override
@@ -26,12 +40,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        mmText = (TextView) findViewById(R.id.mmText);
+        mmText.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+//        // Example of a call to a native method
+//        TextView tv = (TextView) findViewById(R.id.sample_text);
+//        tv.setText(stringFromJNI());
 
         checkPermission();
 
+        // testLame();
+        testFFmpeg();
+    }
+
+    public void showFFMpegInfo(View view) {
+        switch (view.getId()) {
+            case R.id.Protocol:
+                mmText.setText(fFmpegNative.urlprotocolinfo());
+                break;
+            case R.id.Format:
+                mmText.setText(fFmpegNative.avformatinfo());
+                break;
+            case R.id.Codec:
+                mmText.setText(fFmpegNative.avcodecinfo());
+                break;
+            case R.id.Filter:
+                mmText.setText(fFmpegNative.avfilterinfo());
+                break;
+            case R.id.Configuration:
+                mmText.setText(fFmpegNative.configurationinfo());
+                break;
+        }
+    }
+
+    private void testFFmpeg() {
+        fFmpegNative = new FFmpegNative();
+    }
+
+    private void testLame() {
         String pcmPath = "/sdcard/16k.pcm";
         int audioChannels = 1;
         int bitRate = 16;
@@ -39,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
         String mp3Path = "/sdcard/convertpcm.mp3";
 
         encoder = new Mp3Encoder();
-        Log.i(LOG_TAG,"onCreate !!!");
+        Log.i(LOG_TAG, "onCreate !!!");
         encoder.init(pcmPath, audioChannels, bitRate, sampleRate, mp3Path);
-        Log.i(LOG_TAG,"onCreate init success!!");
+        Log.i(LOG_TAG, "onCreate init success!!");
         encoder.encode();
     }
 
@@ -49,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-     //   encoder.destroy();
+        //   encoder.destroy();
     }
 
     /**
