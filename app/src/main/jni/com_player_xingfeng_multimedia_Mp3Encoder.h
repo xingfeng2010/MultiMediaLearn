@@ -34,7 +34,6 @@ JNIEXPORT void JNICALL Java_com_player_xingfeng_multimedia_Mp3Encoder_encode
  */
 JNIEXPORT void JNICALL Java_com_player_xingfeng_multimedia_Mp3Encoder_destroy
   (JNIEnv *, jobject);
-
 #ifdef __cplusplus
 }
 #endif

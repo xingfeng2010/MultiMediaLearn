@@ -24,6 +24,10 @@ extern "C" {
 #include "ffmpeg/include/libavcodec/avcodec.h"
 #include "ffmpeg/include/libavformat/avformat.h"
 #include "ffmpeg/include/libavfilter/avfilter.h"
+#include "ffmpeg/include/libavutil/avutil.h"
+#include "ffmpeg/include/libavutil/frame.h"
+#include "ffmpeg/include/libavutil/imgutils.h"
+#include "platform_4_ffmpeg.h"
 
 #endif
 /*
@@ -66,6 +70,8 @@ JNIEXPORT jstring JNICALL Java_com_player_xingfeng_multimedia_FFmpegNative_avfil
 JNIEXPORT jstring JNICALL Java_com_player_xingfeng_multimedia_FFmpegNative_configurationinfo
   (JNIEnv *, jobject);
 
+JNIEXPORT jint JNICALL
+Java_com_player_xingfeng_multimedia_FFmpegNative_decode(JNIEnv *env, jobject instance, jstring inputPath, jstring outputPath);
 #ifdef __cplusplus
 }
 #endif
