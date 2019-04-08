@@ -27,6 +27,7 @@ extern "C" {
 #include "ffmpeg/include/libavutil/avutil.h"
 #include "ffmpeg/include/libavutil/frame.h"
 #include "ffmpeg/include/libavutil/imgutils.h"
+#include "ffmpeg/include/libavutil/time.h"
 #include "platform_4_ffmpeg.h"
 
 #endif
@@ -72,6 +73,11 @@ JNIEXPORT jstring JNICALL Java_com_player_xingfeng_multimedia_FFmpegNative_confi
 
 JNIEXPORT jint JNICALL
 Java_com_player_xingfeng_multimedia_FFmpegNative_decode(JNIEnv *env, jobject instance, jstring inputPath, jstring outputPath);
+
+JNIEXPORT jint JNICALL
+Java_com_player_xingfeng_multimedia_FFmpegNative_pushStream(JNIEnv *env, jobject instance,
+                                                            jstring inputPath_, jstring playUrl_);
+
 #ifdef __cplusplus
 }
 #endif
