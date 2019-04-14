@@ -29,6 +29,7 @@
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/version.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavutil/imgutils.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavutil/pixdesc.h \
+  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavutil/time.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/platform_4_ffmpeg.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswscale/swscale.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswscale/version.h \
@@ -92,6 +93,8 @@
 /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavutil/imgutils.h:
 
 /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavutil/pixdesc.h:
+
+/Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavutil/time.h:
 
 /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/platform_4_ffmpeg.h:
 

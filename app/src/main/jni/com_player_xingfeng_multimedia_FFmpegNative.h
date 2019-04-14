@@ -28,7 +28,16 @@ extern "C" {
 #include "ffmpeg/include/libavutil/frame.h"
 #include "ffmpeg/include/libavutil/imgutils.h"
 #include "ffmpeg/include/libavutil/time.h"
+#include "ffmpeg/include/libavutil/mathematics.h"
 #include "platform_4_ffmpeg.h"
+
+int avError(int errNum) {
+    char buf[1024];
+    //获取错误信息
+    av_strerror(errNum, buf, sizeof(buf));
+    //LOGE("发生异常：" + buf + c_str());
+    return -1;
+}
 
 #endif
 /*

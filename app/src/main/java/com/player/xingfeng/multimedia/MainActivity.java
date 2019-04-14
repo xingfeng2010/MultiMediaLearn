@@ -43,13 +43,15 @@ public class MainActivity extends AppCompatActivity {
         checkPermission();
 
         // testLame();
-        testFFmpeg();
+        //testFFmpeg();
     }
+
 
     public void showFFMpegInfo(View view) {
         switch (view.getId()) {
             case R.id.Protocol:
-                mmText.setText(fFmpegNative.urlprotocolinfo());
+                //mmText.setText(fFmpegNative.urlprotocolinfo());
+                pushStream();
                 break;
             case R.id.Format:
                 mmText.setText(fFmpegNative.avformatinfo());
@@ -72,6 +74,21 @@ public class MainActivity extends AppCompatActivity {
 
         fFmpegNative = new FFmpegNative();
         fFmpegNative.decode(inputPath, outputPath);
+    }
+
+    private void pushStream() {
+        new Thread() {
+            @Override
+            public void run() {
+                String inputPath = "/sdcard/testffmpeg.flv";
+                String outputPath = "rtmp://192.168.43.24/rtmplive/room";
+
+                fFmpegNative = new FFmpegNative();
+                int pushResult =  fFmpegNative.pushStream(inputPath, outputPath);
+
+                Log.i(LOG_TAG, "pushResult:" + pushResult);
+            }
+        }.start();
     }
 
     private void testLame() {
