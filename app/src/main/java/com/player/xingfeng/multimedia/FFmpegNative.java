@@ -1,5 +1,7 @@
 package com.player.xingfeng.multimedia;
 
+import android.view.Surface;
+
 public class FFmpegNative {
     public native String urlprotocolinfo();
     public native String avformatinfo();

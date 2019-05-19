@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    public String LOG_TAG = "System.out";
+    public static final String LOG_TAG = "System.out";
 
     Mp3Encoder encoder;
     FFmpegNative fFmpegNative;
