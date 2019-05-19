@@ -34,7 +34,10 @@
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswscale/swscale.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswscale/version.h \
   /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswresample/swresample.h \
-  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswresample/version.h
+  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswresample/version.h \
+  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/avfiltergraph.h \
+  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/buffersrc.h \
+  /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/buffersink.h
 
 /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/com_player_xingfeng_multimedia_FFmpegNative.h:
 
@@ -105,3 +108,9 @@
 /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswresample/swresample.h:
 
 /Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libswresample/version.h:
+
+/Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/avfiltergraph.h:
+
+/Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/buffersrc.h:
+
+/Users/lishixing/Desktop/document/android/sourcecode/MultiMediaLearn/app/src/main/jni/ffmpeg/include/libavfilter/buffersink.h:

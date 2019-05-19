@@ -686,3 +686,268 @@ Java_com_player_xingfeng_multimedia_FFmpegNative_pushStream2(JNIEnv *env, jobjec
     }
     return 0;
 }
+
+const char *filters_descr = "drawbox=x=100:y=100:w=100:h=100:color=pink@0.5";
+
+int getCodecContext(AVCodecParameters *codecpar, AVCodecContext **avCodecContext) {
+    AVCodec *dec = avcodec_find_decoder(codecpar->codec_id);
+    if (!dec) {
+        LOGD("can not find decoder");
+        return -1;
+    }
+
+    *avCodecContext = avcodec_alloc_context3(dec);
+    if (!*avCodecContext) {
+        LOGD("can not alloc new decodecctx");
+        return -1;
+    }
+
+    if (avcodec_parameters_to_context(*avCodecContext, codecpar) < 0) {
+        avcodec_free_context(avCodecContext);
+        *avCodecContext = NULL;
+        LOGD("can not fill decodecctx");
+        return -1;
+    }
+
+    if (avcodec_open2(*avCodecContext, dec, 0) != 0) {
+        LOGD("cant not open audio strames");
+        avcodec_free_context(avCodecContext);
+        *avCodecContext = NULL;
+        return -1;
+    }
+    return 0;
+}
+
+/**
+ *
+ * @param env
+ * @param instance
+ * @param url
+ * @param surface
+ * @return
+ */
+JNIEXPORT void JNICALL
+Java_com_player_xingfeng_multimedia_FFmpegNative_play(JNIEnv *env, jobject instance,
+        jstring url_, jobject surface) {
+    const char *url = env->GetStringUTFChars(url_, 0);
+
+    AVFormatContext *pFormatCtx = NULL;
+    AVCodecContext *pCodecCtx = NULL;
+
+    AVFilterContext *buffersink_ctx = NULL;
+    AVFilterContext *buffersrc_ctx = NULL;
+    AVFilterGraph *filter_graph = NULL;
+
+    //-----------------------------AVCodecContext init start----------------------------
+    av_register_all();
+    avfilter_register_all();//
+    pFormatCtx = avformat_alloc_context();
+
+    // Open video file
+    if (avformat_open_input(&pFormatCtx, url, NULL, NULL) != 0) {
+
+        LOGD("Couldn't open url:%s\n", url);
+        return; // Couldn't open file
+    }
+
+    // Retrieve stream information
+    if (avformat_find_stream_info(pFormatCtx, NULL) < 0) {
+        LOGD("Couldn't find stream information.");
+        return;
+    }
+
+    // Find the first video stream
+    int videoStream = -1, i;
+    for (i = 0; i < pFormatCtx->nb_streams; i++) {
+        if (pFormatCtx->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO
+            && videoStream < 0) {
+            videoStream = i;
+        }
+    }
+    if (videoStream == -1) {
+        LOGD("Didn't find a video stream.");
+        return; // Didn't find a video stream
+    }
+
+    if (getCodecContext(pFormatCtx->streams[videoStream]->codecpar, &pCodecCtx) != 0) {
+        LOGD("Didn't get CodecContext.");
+        return;
+    }
+    //-----------------------------AVCodecContext init end-------------------------------
+
+    //------------------------------filter init start------------------------------------
+    char args[512];
+    AVFilter *buffersrc = avfilter_get_by_name("buffer");
+    AVFilter *buffersink = avfilter_get_by_name("buffersink");//新版的ffmpeg库必须为buffersink
+    AVFilterInOut *outputs = avfilter_inout_alloc();
+    AVFilterInOut *inputs = avfilter_inout_alloc();
+
+    enum AVPixelFormat pix_fmts[] = {AV_PIX_FMT_YUV420P, AV_PIX_FMT_NONE};
+
+    filter_graph = avfilter_graph_alloc();
+
+    /* buffer video source: the decoded frames from the decoder will be inserted here. */
+    snprintf(args, sizeof(args),
+             "video_size=%dx%d:pix_fmt=%d:time_base=%d/%d:pixel_aspect=%d/%d",
+             pCodecCtx->width, pCodecCtx->height, pCodecCtx->pix_fmt,
+             pFormatCtx->streams[videoStream]->time_base.num,
+             pFormatCtx->streams[videoStream]->time_base.den,
+             pCodecCtx->sample_aspect_ratio.num, pCodecCtx->sample_aspect_ratio.den);
+
+    if (avfilter_graph_create_filter(&buffersrc_ctx, buffersrc, "in",
+                                     args, NULL, filter_graph) < 0) {
+        LOGD("Cannot create buffer source\n");
+        return;
+    }
+    AVBufferSinkParams *buffersink_params = av_buffersink_params_alloc();
+    buffersink_params->pixel_fmts = pix_fmts;
+    if (avfilter_graph_create_filter(&buffersink_ctx, buffersink, "out",
+                                     NULL, buffersink_params, filter_graph) < 0) {
+        LOGD("Cannot create buffer sink\n");
+        return;
+    }
+    av_free(buffersink_params);
+
+    /* Endpoints for the filter graph. */
+    outputs->name = av_strdup("in");
+    outputs->filter_ctx = buffersrc_ctx;
+    outputs->pad_idx = 0;
+    outputs->next = NULL;
+
+    inputs->name = av_strdup("out");
+    inputs->filter_ctx = buffersink_ctx;
+    inputs->pad_idx = 0;
+    inputs->next = NULL;
+
+    if ((avfilter_graph_parse_ptr(filter_graph, filters_descr,
+                                  &inputs, &outputs, NULL)) < 0) {
+        LOGD("Cannot avfilter_graph_parse_ptr\n");
+        return;
+    }
+
+    if ((avfilter_graph_config(filter_graph, NULL)) < 0) {
+        LOGD("Cannot avfilter_graph_config\n");
+        return;
+    }
+    //------------------------------filter init end------------------------------------
+
+    //------------------------------window init start-----------------------------------
+    // 获取native window
+    ANativeWindow *nativeWindow = ANativeWindow_fromSurface(env, surface);
+
+    // 获取视频宽高
+    int videoWidth = pCodecCtx->width;
+    int videoHeight = pCodecCtx->height;
+
+    // 设置native window的buffer大小,可自动拉伸
+    ANativeWindow_setBuffersGeometry(nativeWindow, videoWidth, videoHeight,
+                                     WINDOW_FORMAT_RGBA_8888);
+    ANativeWindow_Buffer windowBuffer;
+    //------------------------------window init end-----------------------------------
+
+
+    //------------------------------get data-----------------------------------
+
+
+    // 用于渲染
+    AVFrame *pFrameRGBA = av_frame_alloc();
+
+    // Determine required buffer size and allocate buffer
+    // buffer中数据就是用于渲染的,且格式为RGBA
+    int numBytes = av_image_get_buffer_size(AV_PIX_FMT_RGBA, pCodecCtx->width, pCodecCtx->height,
+                                            1);
+    uint8_t *buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
+    av_image_fill_arrays(pFrameRGBA->data, pFrameRGBA->linesize, buffer, AV_PIX_FMT_RGBA,
+                         pCodecCtx->width, pCodecCtx->height, 1);
+
+    // 由于解码出来的帧格式不是RGBA的,在渲染之前需要进行格式转换
+    SwsContext *sws_ctx = sws_getContext(pCodecCtx->width,
+                                         pCodecCtx->height,
+                                         pCodecCtx->pix_fmt,
+                                         pCodecCtx->width,
+                                         pCodecCtx->height,
+                                         AV_PIX_FMT_RGBA,
+                                         SWS_BILINEAR,
+                                         NULL,
+                                         NULL,
+                                         NULL);
+
+    AVPacket *packet = av_packet_alloc();
+    int count = 0;
+    while (av_read_frame(pFormatCtx, packet) == 0) {
+        // Is this a packet from the video stream?
+        if (packet->stream_index == videoStream) {
+            // Decode video frame
+            if (avcodec_send_packet(pCodecCtx, packet) != 0) {
+                break;
+            }
+
+            AVFrame *pFrame = av_frame_alloc();
+
+            while (avcodec_receive_frame(pCodecCtx, pFrame) == 0) {
+                // lock native window buffer
+                ANativeWindow_lock(nativeWindow, &windowBuffer, 0);
+
+                //for AVfilter start
+                pFrame->pts = av_frame_get_best_effort_timestamp(pFrame);
+                //* push the decoded frame into the filtergraph
+                if (av_buffersrc_add_frame(buffersrc_ctx, pFrame) == 0) {
+                    av_buffersink_get_frame(buffersink_ctx, pFrame);
+                } else{
+                    LOGD("Could not av_buffersrc_add_frame");
+                }
+                // 格式转换
+                sws_scale(sws_ctx, (uint8_t const *const *) pFrame->data,
+                          pFrame->linesize, 0, pCodecCtx->height,
+                          pFrameRGBA->data, pFrameRGBA->linesize);
+
+                // 获取stride
+                uint8_t *dst = (uint8_t *) windowBuffer.bits;
+                int dstStride = windowBuffer.stride * 4;
+                uint8_t *src = (pFrameRGBA->data[0]);
+                int srcStride = pFrameRGBA->linesize[0];
+
+                // 由于window的stride和帧的stride不同,因此需要逐行复制
+                int h;
+                for (h = 0; h < videoHeight; h++) {
+                    memcpy(dst + h * dstStride, src + h * srcStride, srcStride);
+                }
+                ANativeWindow_unlockAndPost(nativeWindow);
+
+                count++;
+                LOGD("解码渲染%d帧", count);
+            }
+            av_frame_free(&pFrame);
+            av_free(pFrame);
+        }
+    }
+
+
+    if (nativeWindow) {
+       ANativeWindow_release(nativeWindow);
+    }
+    av_packet_free(&packet);
+    sws_freeContext(sws_ctx);
+
+    avfilter_inout_free(&outputs);
+    av_free(outputs);
+    avfilter_inout_free(&inputs);
+    av_free(inputs);
+
+    av_free(buffer);
+    av_frame_free(&pFrameRGBA);
+    av_free(pFrameRGBA);
+
+    avfilter_graph_free(&filter_graph); //for avfilter
+    // Close the codecs
+    avcodec_close(pCodecCtx);
+    avcodec_free_context(&pCodecCtx);
+    pCodecCtx = NULL;
+
+    // Close the video file
+    avformat_close_input(&pFormatCtx);
+    avformat_free_context(pFormatCtx);
+    pFormatCtx = NULL;
+
+    env->ReleaseStringUTFChars(url_, url);
+}

@@ -37,7 +37,7 @@ LOCAL_SRC_FILES :=  ./libmp3lame/bitstream.c \
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/ffmpeg/include
 
-LOCAL_LDLIBS += -llog -lz
+LOCAL_LDLIBS += -llog -lz -landroid
 LOCAL_SHARED_LIBRARIES := ffmpeg
 
 include $(BUILD_SHARED_LIBRARY)

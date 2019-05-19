@@ -12,4 +12,6 @@ public class FFmpegNative {
     public native int decode(String inputPath, String outputPath);
 
     public native int pushStream(String inputPath, String playUrl);
+
+    public native void play(String url, Surface surface);
 }

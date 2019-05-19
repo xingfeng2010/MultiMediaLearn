@@ -12,6 +12,8 @@
 #ifdef ANDROID
 #include <jni.h>
 #include <android/log.h>
+#include <android/native_window_jni.h>
+#include <android/native_window.h>
 #define LOGE(format, ...)  __android_log_print(ANDROID_LOG_ERROR, "(>_<)", format, ##__VA_ARGS__)
 #else
 #define LOGE(format, ...)  printf("(>_<) " format "\n", ##__VA_ARGS__)
@@ -30,6 +32,12 @@ extern "C" {
 #include "ffmpeg/include/libavutil/time.h"
 #include "ffmpeg/include/libavutil/mathematics.h"
 #include "platform_4_ffmpeg.h"
+
+//-----AVfilter-----
+#include "ffmpeg/include/libavfilter/avfiltergraph.h"
+#include "ffmpeg/include/libavfilter/buffersrc.h"
+#include "ffmpeg/include/libavfilter/buffersink.h"
+//-----AVfilter-----
 
 int avError(int errNum) {
     char buf[1024];
@@ -87,6 +95,9 @@ JNIEXPORT jint JNICALL
 Java_com_player_xingfeng_multimedia_FFmpegNative_pushStream(JNIEnv *env, jobject instance,
                                                             jstring inputPath_, jstring playUrl_);
 
+JNIEXPORT void JNICALL
+Java_com_player_xingfeng_multimedia_FFmpegNative_play(JNIEnv *env, jobject instance,
+                                                            jstring url, jobject surface);
 #ifdef __cplusplus
 }
 #endif
