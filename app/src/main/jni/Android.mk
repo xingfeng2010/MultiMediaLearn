@@ -33,11 +33,22 @@ LOCAL_SRC_FILES :=  ./libmp3lame/bitstream.c \
                     ./wrapper.c \
                     ./Mp3Encoder.cpp \
                     ./mp3_encoder.cpp \
-                    ./com_player_xingfeng_multimedia_FFmpegNative.cpp
+                    ./com_player_xingfeng_multimedia_FFmpegNative.cpp \
+                    ./render/common/Looper.cpp \
+                    ./render/common/MyLooper.cpp \
+                    ./render/xinggles/egl_core.cpp \
+                    ./render/xinggles/EglSurfaceBase.cpp \
+                    ./render/xinggles/GlShaders.cpp \
+                    ./render/xinggles/GlUtils.cpp \
+                    ./render/xinggles/OffscreenSurface.cpp \
+                    ./render/xinggles/WindowSurface.cpp \
+                    ./render/xingrender/GLRender.cpp \
+                    ./render/xingrender/Triangle.cpp \
+                    ./render/NativeRenderControl.cpp
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/ffmpeg/include
 
-LOCAL_LDLIBS += -llog -lz -landroid
+LOCAL_LDLIBS += -llog -lz -landroid -lEGL -lGLESv2
 LOCAL_SHARED_LIBRARIES := ffmpeg
 
 include $(BUILD_SHARED_LIBRARY)
