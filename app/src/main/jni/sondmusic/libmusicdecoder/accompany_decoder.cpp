@@ -46,7 +46,7 @@ int AccompanyDecoder::init(const char* audioFile) {
 	isNeedFirstFrameCorrectFlag = true;
 	firstFrameCorrectionInSecs = 0.0f;
 
-	//avcodec_register_all();
+	avcodec_register_all();
 	av_register_all();
 	avFormatContext = avformat_alloc_context();
 	// 打开输入文件
