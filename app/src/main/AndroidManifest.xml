@@ -46,7 +46,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".NativeRenderActivity" />
-        <activity android:name=".audioplay.AudioPlayActivity"></activity>
+        <activity android:name=".audioplay.AudioPlayActivity" />
+        <activity android:name=".opensles.OpenslesActivity"></activity>
     </application>
 
 </manifest>
