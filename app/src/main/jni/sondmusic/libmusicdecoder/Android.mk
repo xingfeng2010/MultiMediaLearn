@@ -14,7 +14,8 @@ LOCAL_C_INCLUDES += \
     
 LOCAL_SRC_FILES := \
 ./accompany_decoder_controller.cpp \
-./accompany_decoder.cpp 
+./accompany_decoder.cpp             \
+./MusicDecoder.cpp
 
 LOCAL_SHARED_LIBRARIES := ffmpeg libcommontool
 

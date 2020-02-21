@@ -51,6 +51,7 @@
         app:layout_constraintTop_toBottomOf = "@id/opensl_play"
         android:layout_marginTop = "50dp"
         android:layout_marginLeft = "10dip"
+        android:onClick="audioPlay"
         />
 
     <Button
@@ -62,5 +63,6 @@
         app:layout_constraintTop_toBottomOf="@id/opensl_top"
         android:layout_marginTop = "50dp"
         android:layout_marginLeft = "10dip"
+        android:onClick="audioStop"
         />
 </android.support.constraint.ConstraintLayout>
