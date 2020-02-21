@@ -45,7 +45,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NativeRenderActivity"></activity>
+        <activity android:name=".NativeRenderActivity" />
+        <activity android:name=".audioplay.AudioPlayActivity"></activity>
     </application>
 
 </manifest>

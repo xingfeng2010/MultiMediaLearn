@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".audioplay.AudioPlayActivity">
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/opensl_text"
+        android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="OPENSL ES"/>
+
+    <Button
+        android:id="@+id/opensl_play"
+        android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="PLAY"
+        app:layout_constraintLeft_toRightOf="@id/opensl_text"
+        android:layout_marginLeft = "10dip"
+        android:onClick="openslPlay"
+        />
+
+    <Button
+        android:id="@+id/opensl_top"
+        android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="STOP"
+        app:layout_constraintLeft_toRightOf="@id/opensl_play"
+        android:layout_marginLeft = "10dip"
+        android:onClick="openslStop"
+        />
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/audiotrack_text"
+        android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        app:layout_constraintTop_toBottomOf = "@id/opensl_text"
+        android:layout_marginTop = "50dp"
+        android:text="AUDIO TRACK"/>
+
+    <Button
+        android:id="@+id/audiotrack_play"
+        android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="PLAY"
+        app:layout_constraintLeft_toRightOf="@id/audiotrack_text"
+        app:layout_constraintTop_toBottomOf = "@id/opensl_play"
+        android:layout_marginTop = "50dp"
+        android:layout_marginLeft = "10dip"
+        />
+
+    <Button
+        android:id="@+id/audiotrack_top"
+        android:layout_width="wrap_content"
+        android:layout_height = "wrap_content"
+        android:text="STOP"
+        app:layout_constraintLeft_toRightOf="@id/audiotrack_play"
+        app:layout_constraintTop_toBottomOf="@id/opensl_top"
+        android:layout_marginTop = "50dp"
+        android:layout_marginLeft = "10dip"
+        />
+</android.support.constraint.ConstraintLayout>

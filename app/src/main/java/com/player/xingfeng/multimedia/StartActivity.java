@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.player.xingfeng.multimedia.audioplay.AudioPlayActivity;
+
 public class StartActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView mListView;
     private LayoutInflater mLayoutInflator;
@@ -18,7 +20,8 @@ public class StartActivity extends AppCompatActivity implements AdapterView.OnIt
             MainActivity.class,
             LivePushActivity.class,
             FFMpegFilterActivity.class,
-            NativeRenderActivity.class
+            NativeRenderActivity.class,
+            AudioPlayActivity.class
     };
 
 
@@ -46,7 +49,8 @@ public class StartActivity extends AppCompatActivity implements AdapterView.OnIt
                 "Mp3Encoder And FFMepge Info",
                 "Push Stream",
                 "FFMpegFilter",
-                "Natvie EGL"
+                "Natvie EGL",
+                "Audio Play"
         };
 
         @Override
