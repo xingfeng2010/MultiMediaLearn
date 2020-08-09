@@ -13,7 +13,6 @@ public class LivePushActivity extends AppCompatActivity {
 
     static {
         System.loadLibrary("ffmpeg");
-        System.loadLibrary("native-lib");
         System.loadLibrary("audioencoder");
     }
 

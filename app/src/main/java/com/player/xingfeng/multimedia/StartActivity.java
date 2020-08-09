@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.player.xingfeng.multimedia.audioplay.AudioPlayActivity;
+import com.player.xingfeng.multimedia.cthread.ThreadTestActivity;
 import com.player.xingfeng.multimedia.opensles.OpenslesActivity;
 
 public class StartActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
@@ -23,7 +24,8 @@ public class StartActivity extends AppCompatActivity implements AdapterView.OnIt
             FFMpegFilterActivity.class,
             NativeRenderActivity.class,
             AudioPlayActivity.class,
-            OpenslesActivity.class
+            OpenslesActivity.class,
+            ThreadTestActivity.class
     };
 
 
@@ -53,7 +55,8 @@ public class StartActivity extends AppCompatActivity implements AdapterView.OnIt
                 "FFMpegFilter",
                 "Natvie EGL",
                 "Audio Play",
-                "OpenSL ES"
+                "OpenSL ES",
+                "C Thread示例"
         };
 
         @Override

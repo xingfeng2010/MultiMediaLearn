@@ -20,7 +20,21 @@ add_library( # Sets the name of the library.
              src/main/cpp/opensles/opensl_audio.cpp
              src/main/cpp/opensles/pcmdata.cpp
              src/main/cpp/opensles/SXQueue.cpp
+             src/main/cpp/opensles/test.cpp
               )
+
+add_library( # Sets the name of the library.
+        native-lib
+
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        src/main/cpp/cthread/JavaListener.cpp
+        src/main/cpp/cthread/native-lib.cpp
+        )
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -std=c++0x")
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -47,3 +61,10 @@ target_link_libraries( # Specifies the target library.
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )
+
+target_link_libraries( # Specifies the target library.
+        native-lib
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib} )

@@ -13,7 +13,6 @@ public class FFMpegFilterActivity extends AppCompatActivity implements SurfaceHo
 
     static {
         System.loadLibrary("ffmpeg");
-        System.loadLibrary("native-lib");
         System.loadLibrary("audioencoder");
     }
 
