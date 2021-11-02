@@ -2,7 +2,6 @@ package com.player.xingfeng.multimedia.audioplay;
 
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.view.View;
 import com.player.xingfeng.multimedia.R;
 import com.player.xingfeng.multimedia.audioplay.audiotrack.NativeMp3PlayerController;
 import com.player.xingfeng.multimedia.audioplay.opensles.SoundTrackController;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class AudioPlayActivity extends AppCompatActivity {

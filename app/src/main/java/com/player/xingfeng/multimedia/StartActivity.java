@@ -1,7 +1,6 @@
 package com.player.xingfeng.multimedia;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 import com.player.xingfeng.multimedia.audioplay.AudioPlayActivity;
 import com.player.xingfeng.multimedia.cthread.ThreadTestActivity;
 import com.player.xingfeng.multimedia.opensles.OpenslesActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StartActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
     private ListView mListView;

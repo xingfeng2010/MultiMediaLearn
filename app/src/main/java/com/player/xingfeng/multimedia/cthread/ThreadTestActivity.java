@@ -1,11 +1,12 @@
 package com.player.xingfeng.multimedia.cthread;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.player.xingfeng.multimedia.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ThreadTestActivity extends AppCompatActivity {
      ThreadDemo mThreadDemo;

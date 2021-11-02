@@ -2,7 +2,6 @@ package com.player.xingfeng.multimedia.opensles;
 
 import android.content.res.AssetManager;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,8 @@ import com.player.xingfeng.multimedia.R;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class OpenslesActivity extends AppCompatActivity {
 

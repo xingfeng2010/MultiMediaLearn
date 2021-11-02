@@ -4,6 +4,9 @@
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
+message(${CMAKE_ASM_FLAGS_RELEASE})
+message(${CMAKE_BUILD_TYPE})
+message(${CMAKE_SOURCE_DIR})
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.

@@ -3,7 +3,7 @@
 //
 
 #include "jni.h"
-#include "../../../../../../../../../../Library/Android/sdk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h"
+//#include "../../../../../../../../../../Library/Android/sdk/android-ndk-r20b/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/jni.h"
 
 #ifndef MULTIMEDIALEARN_JAVALISTENER_H
 #define MULTIMEDIALEARN_JAVALISTENER_H
