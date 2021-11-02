@@ -1,7 +1,11 @@
 *.iml
 .gradle
 /local.properties
+<<<<<<< Updated upstream
 **/.idea/*
+=======
+.idea
+>>>>>>> Stashed changes
 .DS_Store
 /build
 /captures
